@@ -1,26 +1,62 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      login: ''
+    };
+  }
+
+  componentDidMount() {
+    axios.get('https://api.github.com/users/CoinOperatedGuy')
+      .then((res) => {
+        console.log(res.data);
+        this.setState(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    console.log('componentDidMount running');
+  }
+
+  handleChanges = e => {
+    this.setState(e.target.value);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate is getting called!');
+    console.log('prevProps: ', prevProps);
+    console.log('prevState: ', prevState);
+
+    if (prevProps.userID !== this.props.userID) {
+      console.log('If this runs, we are in trouble');
+    }
+
+    if (prevState.name !== this.state.name) {
+      console.log('There are new users on the state!');
+    }
+  }
+
+  componentWillUnmount() {
+    console.log('This will not run because App is still on screen');
+  }
+
+  render() {
+    console.log('App is rendering!');
+    console.log('this.state.name', this.state.name);
+    return (
+      <div className='usercard'>
+        <h2>{this.state.name}</h2>
+        <img src={this.state.avatar_url}/>
+        <p>{this.state.login}</p>
+        <a href={this.state.html_url}>{this.state.html_url}</a>
+      </div>
+    );
+  }
 }
 
 export default App;
