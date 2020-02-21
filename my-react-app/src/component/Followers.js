@@ -26,10 +26,12 @@ class Followers extends React.Component {
         console.log('App is rendering!');
         return (
           <div className='usercard'>
-            <h2>{this.state.follower.login}</h2>
+            <h2>Name: {this.state.follower.name}</h2>
             <img src={this.state.follower.avatar_url} className='picture' alt='' />
-            <p>Name: {this.state.follower.name}</p>
+            <p>{this.state.follower.login}</p>
+            <a href={this.state.follower.html_url}>{this.state.follower.html_url}</a>
             <p>Location: {this.state.follower.location}</p>
+            <p>{this.state.follower.bio}</p>
           </div>
         );
     }  

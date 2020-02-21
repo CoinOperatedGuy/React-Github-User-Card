@@ -65,7 +65,7 @@ class App extends React.Component {
           <h2>{this.state.user.name}</h2>
           <img src={this.state.user.avatar_url} className='picture' alt='' />
           <p>{this.state.user.login}</p>
-          <a href={this.state.user.html_url}>{this.state.html_url}</a>
+          <a href={this.state.user.html_url}>{this.state.user.html_url}</a>
           <p>Location: {this.state.user.location}</p>
           <p>Bio: {this.state.user.bio}</p>
         </div>
