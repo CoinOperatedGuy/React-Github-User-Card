@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import Followers from './my-react-app/src/component/Followers.js';
+import Followers from './component/Followers';
 import './App.css';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: '',
-      login: ''
+      user: {},
+      userText: '',
+      follower: []
     };
   }
 
   componentDidMount() {
-    axios.get('https://api.github.com/users/CoinOperatedGuy')
-      .then((res) => {
+    axios.all([
+      axios.get('https://api.github.com/users/CoinOperatedGuy'),
+      axios.get('https://api.github.com/users/CoinOperatedGuy/followers')
+    ])
+    .then(axios.spread((res, fol) => {
         console.log(res.data);
-        this.setState(res.data);
-      })
+        this.setState({
+          user: res.data,
+          follower: fol.data
+        })
+      }))
       .catch((err) => {
-        console.log(err);
+        console.log('componentDidMount Error: ', err);
       })
     console.log('componentDidMount running');
   }
 
-  handleChanges = e => {
-    this.setState(e.target.value);
-  };
+  handleChange = e => {
+    this.setState( { 
+      userText: e.target.value 
+    } )
+    console.log( 'This is state: ', e.target.value )
+  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('componentDidUpdate is getting called!');
@@ -48,15 +58,22 @@ class App extends React.Component {
 
   render() {
     console.log('App is rendering!');
-    console.log('this.state.name', this.state.name);
+    console.log('this.state.name', this.state.user.name);
     return (
-      <div className='usercard'>
-        <h2>{this.state.name}</h2>
-        <img src={this.state.avatar_url} className='picture' alt='' />
-        <p>{this.state.login}</p>
-        <a href={this.state.html_url}>{this.state.html_url}</a>
-        <p>Location: {this.state.location}</p>
-        <p>Bio: {this.state.bio}</p>
+      <div>
+        <div className='usercard'>
+          <h2>{this.state.user.name}</h2>
+          <img src={this.state.user.avatar_url} className='picture' alt='' />
+          <p>{this.state.user.login}</p>
+          <a href={this.state.user.html_url}>{this.state.html_url}</a>
+          <p>Location: {this.state.user.location}</p>
+          <p>Bio: {this.state.user.bio}</p>
+        </div>
+        <div>
+          {this.state.follower.map(fol => (
+            <Followers follower = {fol} />
+          ))}
+        </div>
       </div>
     )
   }
