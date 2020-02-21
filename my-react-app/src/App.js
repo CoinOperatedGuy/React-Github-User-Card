@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Followers from './my-react-app/src/component/Followers.js';
 import './App.css';
 
 class App extends React.Component {
@@ -51,12 +52,14 @@ class App extends React.Component {
     return (
       <div className='usercard'>
         <h2>{this.state.name}</h2>
-        <img src={this.state.avatar_url}/>
+        <img src={this.state.avatar_url} className='picture' alt='' />
         <p>{this.state.login}</p>
         <a href={this.state.html_url}>{this.state.html_url}</a>
+        <p>Location: {this.state.location}</p>
+        <p>Bio: {this.state.bio}</p>
       </div>
-    );
+    )
   }
-}
+};
 
 export default App;
