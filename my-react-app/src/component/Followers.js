@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import axios from 'axios';
 
 
@@ -31,7 +31,7 @@ class Followers extends React.Component {
             <p>{this.state.follower.login}</p>
             <a href={this.state.follower.html_url}>{this.state.follower.html_url}</a>
             <p>Location: {this.state.follower.location}</p>
-            <p>{this.state.follower.bio}</p>
+            <p>Bio: {this.state.follower.bio}</p>
           </div>
         );
     }  

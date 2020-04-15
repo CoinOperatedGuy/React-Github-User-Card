@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Followers from './component/Followers';
 import './App.css';
@@ -20,6 +20,7 @@ class App extends React.Component {
     ])
     .then(axios.spread((res, fol) => {
         console.log(res.data);
+        console.log(fol.data);
         this.setState({
           user: res.data,
           follower: fol.data
@@ -68,6 +69,7 @@ class App extends React.Component {
           <a href={this.state.user.html_url}>{this.state.user.html_url}</a>
           <p>Location: {this.state.user.location}</p>
           <p>Bio: {this.state.user.bio}</p>
+          <p>Company: {this.state.user.company}</p>
         </div>
         <div>
           {this.state.follower.map(fol => (
