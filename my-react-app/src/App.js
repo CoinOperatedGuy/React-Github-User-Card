@@ -61,7 +61,10 @@ class App extends React.Component {
     console.log('App is rendering!');
     console.log('this.state.name', this.state.user.name);
     return (
-      <div>
+      <div className='container'>
+        <div className='header'>
+          <h1>Github UserCards</h1>
+        </div>
         <div className='usercard'>
           <h2>{this.state.user.name}</h2>
           <img src={this.state.user.avatar_url} className='picture' alt='' />
@@ -71,7 +74,7 @@ class App extends React.Component {
           <p>Bio: {this.state.user.bio}</p>
           <p>Company: {this.state.user.company}</p>
         </div>
-        <div>
+        <div className='followers'>
           {this.state.follower.map(fol => (
             <Followers follower = {fol} />
           ))}
